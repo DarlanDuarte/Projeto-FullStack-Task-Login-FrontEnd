@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 
 const Login = () => {
-  const [login, setLogin] = useState<"login" | "cadastro">("cadastro");
+  const [login, setLogin] = useState<"login" | "cadastro">("login");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ const Login = () => {
     setTimeout(() => setMsgSucess(null), tempo);
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const response = await fetch(`http://localhost:8080/user/login`, {
@@ -260,7 +260,7 @@ const Login = () => {
           <p className={`text-center font-bold text-lg text-black`}>
             Preencha o formulário
           </p>
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e) => handleLogin(e)}>
             <div className={` w-full mt-4 flex justify-center items-center  `}>
               <label
                 htmlFor="email"
