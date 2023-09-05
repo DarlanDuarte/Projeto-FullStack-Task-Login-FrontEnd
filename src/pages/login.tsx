@@ -33,7 +33,7 @@ const Login = () => {
       className={`w-screen h-screen bg-[#0C134F] flex justify-center items-center`}
     >
       <div
-        className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-3xl
+        className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-4xl
         md:w-11/12
         sm:w-full
       `}
@@ -59,10 +59,10 @@ const Login = () => {
           </button>
         </div>
         <div className={`w-full flex flex-col justify-center  `}>
-          <h2 className={`text-center  text-4xl font-extrabold`}>
+          <h2 className={`text-center  text-5xl font-extrabold text-black`}>
             Crie Sua Conta
           </h2>
-          <p className={`text-center font-bold text-lg`}>
+          <p className={`text-center text-black font-bold text-lg`}>
             Preencha o formulário
           </p>
           <form action="" onSubmit={(e) => handleSubmit(e)}>
@@ -90,7 +90,7 @@ const Login = () => {
                 />
               </label>
             </div>
-            <div className={` w-full mt-2 flex justify-center items-center `}>
+            <div className={` w-full mt-4 flex justify-center items-center `}>
               <label
                 htmlFor="email"
                 className="relative w-3/4 shadow-4xl rounded-xl"
@@ -114,7 +114,7 @@ const Login = () => {
                 />
               </label>
             </div>
-            <div className={` w-full mt-2 flex justify-center items-center `}>
+            <div className={` w-full mt-4 flex justify-center items-center `}>
               <label
                 htmlFor="senha"
                 className="relative w-3/4 shadow-4xl rounded-xl"
@@ -169,7 +169,7 @@ const Login = () => {
     <div
       className={`w-screen h-screen bg-[#0C134F] flex justify-center items-center `}
     >
-      <div className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-3xl`}>
+      <div className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-4xl`}>
         <div
           className={`flex flex-col w-7/12 h-full bg-[#5C469C] justify-center items-center rounded-lg `}
         >
@@ -177,7 +177,7 @@ const Login = () => {
             Já é Cadastrado?
           </h2>
           <p className={`text-white text-lg font-medium`}>
-            Faça seu cadastro agora mesmo.{" "}
+            Faça seu cadastro agora mesmo.
           </p>
           <button
             onClick={() => setLogin(login === "login" ? "cadastro" : "login")}
@@ -189,10 +189,10 @@ const Login = () => {
           </button>
         </div>
         <div className={`w-full flex flex-col justify-center `}>
-          <h2 className={`text-center  text-4xl font-extrabold`}>
+          <h2 className={`text-center  text-5xl font-extrabold text-black`}>
             Faça Seu Login
           </h2>
-          <p className={`text-center font-bold text-lg`}>
+          <p className={`text-center font-bold text-lg text-black`}>
             Preencha o formulário
           </p>
           <form action="">
@@ -220,7 +220,7 @@ const Login = () => {
                 />
               </label>
             </div>
-            <div className={` w-full mt-2 flex justify-center items-center `}>
+            <div className={` w-full mt-4 flex justify-center items-center `}>
               <label
                 htmlFor="senha"
                 className="relative w-3/4 shadow-4xl rounded-xl"
