@@ -4,6 +4,7 @@ import { BiSolidUserCircle } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const [login, setLogin] = useState<"login" | "cadastro">("cadastro");
@@ -11,6 +12,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msgError, setMsgError] = useState<string | null>(null);
+  const [msgSucess, setMsgSucess] = useState<string | null>(null);
+
+  const router = useRouter();
 
   function ExibirError(msg: string, tempo: number = 5000) {
     setMsgError(msg);
@@ -19,12 +23,65 @@ const Login = () => {
     }, tempo);
   }
 
+  function ExibirSucess(msg: string, tempo: number = 5000) {
+    setMsgSucess(msg);
+    setTimeout(() => setMsgSucess(null), tempo);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     try {
+      const response = await fetch(`http://localhost:8080/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const error: string = await response.json();
+        ExibirError(error, 5000);
+        return;
+      }
+
+      const data = await response.json();
+      const { token } = data;
+
+      localStorage.setItem("@tokenUser", token);
+
+      router.push("http://localhost:3000");
+
+      console.log(data);
     } catch (e: any) {
       console.log(`Algo deu Errado na Requisição`, e.message);
+    }
+  }
+
+  async function handleCadastro(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8080/user`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, password }),
+      });
+
+      if (!response.ok) {
+        const error: string = await response.json();
+        ExibirError(error, 5000);
+        return;
+      }
+
+      const data = await response.json();
+      const { message } = data;
+
+      console.log(message);
+
+      ExibirSucess(message, 5000);
+      setNome("");
+      setEmail("");
+      setPassword("");
+    } catch (e: any) {
+      console.log(`Ocorreu Um Erro na tentativa de cadastro!`, e.message);
     }
   }
 
@@ -65,7 +122,7 @@ const Login = () => {
           <p className={`text-center text-black font-bold text-lg`}>
             Preencha o formulário
           </p>
-          <form action="" onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e) => handleCadastro(e)}>
             <div className={` w-full mt-4 flex justify-center items-center `}>
               <label
                 htmlFor="nome"
@@ -142,9 +199,17 @@ const Login = () => {
             {msgError ? (
               <div className={`flex flex-col justify-center items-center `}>
                 <div
-                  className={`w-8/12 mt-2 text-xl font-bold bg-red-500 rounded-xl text-white border-2 border-red-700 text-center `}
+                  className={`w-10/12 mt-4 text-xl font-bold bg-red-500 rounded-xl text-white border-2 border-red-700 text-center p-1 `}
                 >
                   {msgError}
+                </div>
+              </div>
+            ) : msgSucess ? (
+              <div className={`flex flex-col justify-center items-center `}>
+                <div
+                  className={`w-10/12 mt-4 text-xl font-bold bg-green-500 rounded-xl text-white border-2 border-green-700 text-center p-1 `}
+                >
+                  {msgSucess}
                 </div>
               </div>
             ) : (
@@ -195,7 +260,7 @@ const Login = () => {
           <p className={`text-center font-bold text-lg text-black`}>
             Preencha o formulário
           </p>
-          <form action="">
+          <form onSubmit={(e) => handleSubmit(e)}>
             <div className={` w-full mt-4 flex justify-center items-center  `}>
               <label
                 htmlFor="email"
@@ -248,7 +313,7 @@ const Login = () => {
             {msgError ? (
               <div className={`flex flex-col justify-center items-center `}>
                 <div
-                  className={`w-8/12 mt-2 text-xl font-bold bg-red-500 rounded-xl text-white border-2 border-red-700 text-center `}
+                  className={`w-10/12 mt-4 text-xl font-bold bg-red-500 rounded-xl text-white border-2 border-red-700 text-center p-1`}
                 >
                   {msgError}
                 </div>
