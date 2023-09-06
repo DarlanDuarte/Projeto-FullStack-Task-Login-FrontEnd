@@ -21,6 +21,7 @@ const config: Config = {
         "2xl": { min: "1536px" },
       },
       boxShadow: {
+        "3xl": "3px 1px 6px 4px rbga(0, 0, 0, 0.50)",
         "4xl": "3px 3px 4px 4px rgba(0, 0, 0, 0.75)",
       },
     },
