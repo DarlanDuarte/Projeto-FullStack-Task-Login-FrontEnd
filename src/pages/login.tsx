@@ -89,7 +89,12 @@ const Login = () => {
     <div
       className={`w-screen h-screen bg-[#0C134F] flex justify-center items-center`}
     >
-      <div
+      <motion.div
+        key={"cadastro"}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.5 }}
+        transition={{ duration: 1 }}
         className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-4xl
         md:w-11/12
         sm:w-full
@@ -102,7 +107,7 @@ const Login = () => {
             Seja Bem Vindo!
           </h2>
           <p className={`text-white text-lg font-bold`}>
-            Acesse sua conta agora mesmo.{" "}
+            Acesse sua conta agora mesmo.
           </p>
           <button
             onClick={() =>
@@ -228,20 +233,27 @@ const Login = () => {
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   ) : (
     <div
       className={`w-screen h-screen bg-[#0C134F] flex justify-center items-center `}
     >
-      <div className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-4xl`}>
+      <motion.div
+        key={"login"}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.5 }}
+        transition={{ duration: 1 }}
+        className={` flex w-8/12 h-3/5 bg-white rounded-lg shadow-4xl`}
+      >
         <div
           className={`flex flex-col w-7/12 h-full bg-[#5C469C] justify-center items-center rounded-lg `}
         >
-          <h2 className={`text-white text-4xl font-bold mb-4`}>
+          <h2 className={`text-white text-4xl font-extrabold mb-4`}>
             Já é Cadastrado?
           </h2>
-          <p className={`text-white text-lg font-medium`}>
+          <p className={`text-white text-lg font-bold`}>
             Faça seu cadastro agora mesmo.
           </p>
           <button
@@ -335,7 +347,7 @@ const Login = () => {
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
