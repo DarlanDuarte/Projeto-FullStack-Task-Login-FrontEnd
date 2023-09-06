@@ -1,5 +1,6 @@
 import Logout from "@/components/Logout/Logout";
 import Table from "@/components/Table/Table";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface IDataTasks {
@@ -10,6 +11,9 @@ interface IDataTasks {
 export default function Home() {
   const [data, setData] = useState<IDataTasks[]>([]);
   const [task, setTask] = useState("");
+  const [msg, setMsg] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const pegandoTasks = async () => {
@@ -20,6 +24,7 @@ export default function Home() {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         });
 
@@ -66,6 +71,7 @@ export default function Home() {
       const resp = await response.json();
       console.log(resp);
       setTask("");
+      router.reload();
     } catch (e: any) {
       console.log(`Error ao tentar Criar tarefa`, e.message);
     }
@@ -77,10 +83,15 @@ export default function Home() {
       <div
         className={`flex flex-col justify-center items-center w-screen h-screen`}
       >
-        <div className={`bg-[#35155D] w-8/12 h-1/2 p-10`}>
-          <div className={`flex mb-20 h-10`}>
+        <div
+          className={`bg-[#35155D] w-8/12 h-5/6 p-10 shadow-4xl overflow-auto`}
+        >
+          <h1 className={`text-center text-5xl mb-6 font-bold`}>
+            Lista de Tarefas
+          </h1>
+          <div className={`flex mb-10 `}>
             <input
-              className={`w-[95%] h-10 outline-none text-black font-semibold text-xl  pl-5`}
+              className={`w-[95%] h-10 outline-none text-black font-semibold text-xl  pl-5 rounded-md`}
               type="text"
               id={"task"}
               name={`task`}
@@ -90,25 +101,32 @@ export default function Home() {
               }
             />
             <button
-              className={` ml-2 w-12 h-10 text-2xl  text-center font-bold bg-[#4477CE]`}
+              className={` ml-2 w-12  text-[1.6rem]  text-center font-bold bg-[#4477CE] rounded-sm 
+                hover:bg-green-500
+              `}
               onClick={() => handleNewTask()}
             >
               +
             </button>
           </div>
           <table
-            className={` w-full border-collapse border-2 border-slate-200 bg-white text-black text-xl shadow-3xl shadow-gray-600`}
+            className={` w-full border-collapse border-2 border-slate-200  bg-white text-black text-xl  `}
           >
             <thead>
-              <tr className={``}>
+              <tr className={`h-16`}>
                 <th className={`border-2 border-slate-400`}>UserID</th>
                 <th className={`border-2 border-slate-400`}>Tarefas</th>
                 <th className={`border-2 border-slate-400`}>Ações</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={``}>
               {data.map((value, index) => (
-                <Table key={index} id={value.id} tasks={value.tasks} />
+                <Table
+                  key={value.id}
+                  id={value.id}
+                  tasks={value.tasks}
+                  index={index}
+                />
               ))}
             </tbody>
           </table>
