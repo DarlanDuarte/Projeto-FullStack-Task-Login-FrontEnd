@@ -80,9 +80,16 @@ const Login = () => {
       setNome("");
       setEmail("");
       setPassword("");
+      setLogin("login");
     } catch (e: any) {
       console.log(`Ocorreu Um Erro na tentativa de cadastro!`, e.message);
     }
+  }
+
+  async function handleLoginCadastro() {
+    setLogin(login === "cadastro" ? "login" : "cadastro");
+    setEmail("");
+    setPassword("");
   }
 
   return login === "cadastro" ? (
@@ -110,9 +117,7 @@ const Login = () => {
             Acesse sua conta agora mesmo.
           </p>
           <button
-            onClick={() =>
-              setLogin(login === "cadastro" ? "login" : "cadastro")
-            }
+            onClick={() => handleLoginCadastro()}
             className={`mt-4 w-56 h-10 rounded-3xl bg-[#1D267D] text-lg font-medium text-white
             hover:bg-[#0C134F] duration-500
           `}

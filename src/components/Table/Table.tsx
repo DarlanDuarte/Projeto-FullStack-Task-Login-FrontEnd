@@ -1,3 +1,4 @@
+import { IDataTasks } from "@/pages";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -7,9 +8,10 @@ interface ITable {
   id: number;
   tasks: string;
   index: number;
+  setData: React.Dispatch<React.SetStateAction<IDataTasks[]>>;
 }
 
-const Table: React.FC<ITable> = ({ id, tasks, index }) => {
+const Table: React.FC<ITable> = ({ id, tasks, index, setData }) => {
   const [editando, setEditando] = useState(false);
   const [task, setTask] = useState(tasks);
 
@@ -19,6 +21,8 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
   async function DeletandoTask(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
+    e.preventDefault();
+
     try {
       const token = localStorage.getItem("@tokenUser");
 
@@ -38,7 +42,8 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
 
       const data = await response.json();
       console.log(data);
-      router.reload();
+
+      setData((prev) => prev.filter((value, index) => value.id !== id));
     } catch (e: any) {
       console.log(`Error na tentativa de delete`, e.message);
     }
@@ -69,6 +74,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
 
       const data = await response.json();
       handleEditTask();
+
       router.reload();
       console.log(data);
     } catch (e: any) {
@@ -82,7 +88,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
         par ? "bg-slate-200" : "bg-white"
       }   border-2 border-slate-400 h-16`}
     >
-      <td className={` border-2`}> {id} </td>
+      <td className={` border-2 pl-10 `}> {id} </td>
       <td className={` border-2`}>
         {editando ? (
           <input
@@ -98,7 +104,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
           tasks
         )}
       </td>
-      <td className={` border-2`}>
+      <td className={`flex flex-wrap justify-center items-center  mt-4`}>
         <button onClick={editando ? handleUpdateTask : handleEditTask}>
           {editando ? (
             <MdModeEdit
@@ -117,7 +123,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
         <button onClick={(e) => DeletandoTask(e)}>
           <PiTrashFill
             size={30}
-            className={`ml-2 bg-red-600 rounded-sm`}
+            className={`ml-4 bg-red-600 rounded-sm`}
             color={"white"}
           />
         </button>

@@ -3,7 +3,7 @@ import Table from "@/components/Table/Table";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-interface IDataTasks {
+export interface IDataTasks {
   id: number;
   tasks: string;
 }
@@ -45,9 +45,13 @@ export default function Home() {
     };
 
     pegandoTasks();
-  }, []);
+  }, [task]);
 
-  async function handleNewTask() {
+  async function handleNewTask(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+
     try {
       const token = localStorage.getItem("@tokenUser");
 
@@ -71,7 +75,6 @@ export default function Home() {
       const resp = await response.json();
       console.log(resp);
       setTask("");
-      router.reload();
     } catch (e: any) {
       console.log(`Error ao tentar Criar tarefa`, e.message);
     }
@@ -101,10 +104,10 @@ export default function Home() {
               }
             />
             <button
-              className={` ml-2 w-12  text-[1.6rem]  text-center font-bold bg-[#4477CE] rounded-sm 
+              className={` ml-2 w-12   text-[1.6rem]  text-center font-bold bg-[#4477CE] rounded-sm 
                 hover:bg-green-500
               `}
-              onClick={() => handleNewTask()}
+              onClick={(e) => handleNewTask(e)}
             >
               +
             </button>
@@ -126,6 +129,7 @@ export default function Home() {
                   id={value.id}
                   tasks={value.tasks}
                   index={index}
+                  setData={setData}
                 />
               ))}
             </tbody>
