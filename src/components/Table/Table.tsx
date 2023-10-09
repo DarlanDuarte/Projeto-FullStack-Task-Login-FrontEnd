@@ -82,8 +82,8 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
         par ? "bg-slate-200" : "bg-white"
       }   border-2 border-slate-400 h-16`}
     >
-      <th className={` border-2`}> {id} </th>
-      <th className={` border-2`}>
+      <td className={` border-2`}> {id} </td>
+      <td className={` border-2`}>
         {editando ? (
           <input
             type="text"
@@ -97,8 +97,8 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
         ) : (
           tasks
         )}
-      </th>
-      <th className={` border-2`}>
+      </td>
+      <td className={` border-2`}>
         <button onClick={editando ? handleUpdateTask : handleEditTask}>
           {editando ? (
             <MdModeEdit
@@ -121,7 +121,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index }) => {
             color={"white"}
           />
         </button>
-      </th>
+      </td>
     </tr>
   );
 };
