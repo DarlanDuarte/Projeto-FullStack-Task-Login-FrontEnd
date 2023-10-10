@@ -51,7 +51,7 @@ const Login = () => {
 
       localStorage.setItem("@tokenUser", token);
 
-      router.push("http://localhost:3000");
+      router.push("/");
 
       console.log(data);
     } catch (e: any) {
