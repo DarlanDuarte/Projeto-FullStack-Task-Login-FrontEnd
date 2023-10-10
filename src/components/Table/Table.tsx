@@ -1,6 +1,7 @@
+import { NovoContext } from "@/context/CreateContext";
 import { IDataTasks } from "@/pages";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { PiTrashFill } from "react-icons/pi";
 
@@ -15,6 +16,8 @@ const Table: React.FC<ITable> = ({ id, tasks, index, setData }) => {
   const [editando, setEditando] = useState(false);
   const [task, setTask] = useState(tasks);
 
+  const { baseURL } = useContext(NovoContext);
+
   const router = useRouter();
   const par: boolean = index % 2 === 0;
 
@@ -26,7 +29,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index, setData }) => {
     try {
       const token = localStorage.getItem("@tokenUser");
 
-      const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+      const response = await fetch(`${baseURL}/tasks/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,7 +60,7 @@ const Table: React.FC<ITable> = ({ id, tasks, index, setData }) => {
     try {
       const token = localStorage.getItem("@tokenUser");
 
-      const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+      const response = await fetch(`${baseURL}/tasks/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

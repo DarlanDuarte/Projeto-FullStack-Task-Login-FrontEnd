@@ -1,10 +1,11 @@
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { NovoContext } from "@/context/CreateContext";
 
 const Login = () => {
   const [login, setLogin] = useState<"login" | "cadastro">("login");
@@ -15,6 +16,8 @@ const Login = () => {
   const [msgSucess, setMsgSucess] = useState<string | null>(null);
 
   const router = useRouter();
+
+  const { baseURL } = useContext(NovoContext);
 
   function ExibirError(msg: string, tempo: number = 5000) {
     setMsgError(msg);
@@ -31,7 +34,7 @@ const Login = () => {
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/user/login`, {
+      const response = await fetch(`${baseURL}/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -59,7 +62,7 @@ const Login = () => {
   async function handleCadastro(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/user`, {
+      const response = await fetch(`${baseURL}/user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, email, password }),
@@ -90,6 +93,7 @@ const Login = () => {
     setLogin(login === "cadastro" ? "login" : "cadastro");
     setEmail("");
     setPassword("");
+    setNome("");
   }
 
   return login === "cadastro" ? (

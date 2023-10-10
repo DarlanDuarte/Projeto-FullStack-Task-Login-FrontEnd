@@ -1,7 +1,8 @@
 import Logout from "@/components/Logout/Logout";
 import Table from "@/components/Table/Table";
+import { NovoContext } from "@/context/CreateContext";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export interface IDataTasks {
   id: number;
@@ -15,12 +16,14 @@ export default function Home() {
 
   const router = useRouter();
 
+  const { baseURL } = useContext(NovoContext);
+
   useEffect(() => {
     const pegandoTasks = async () => {
       try {
         const token = localStorage.getItem("@tokenUser");
 
-        const response = await fetch(`http://localhost:8080/tasks`, {
+        const response = await fetch(`${baseURL}/tasks`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +58,7 @@ export default function Home() {
     try {
       const token = localStorage.getItem("@tokenUser");
 
-      const response = await fetch(`http://localhost:8080/tasks`, {
+      const response = await fetch(`${baseURL}/tasks`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

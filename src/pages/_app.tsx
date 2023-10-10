@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading/Loading";
 import { useRouter } from "next/router";
+import { Provider } from "@/context/CreateContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -38,5 +39,11 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, [router]);
 
-  return loading ? <Loading /> : <Component {...pageProps} />;
+  return loading ? (
+    <Loading />
+  ) : (
+    <Provider>
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
